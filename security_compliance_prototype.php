@@ -20,23 +20,29 @@ function security_compliance_prototype() {
       ),
       'public' => true,
       'has_archive' => true,
+      'supports'    => array(''),
+
     )
   );
+
+  add_post_type_support('post', '');
 }
 
 
 function declarationMeta($meta_boxes){
+
   $prefix = 'sc_pro_';
   $meta_boxes[] = array(
-    'title'      => __( 'Personal Information', 'your-prefix' ),
+    'title'      => __( 'Create Declaration', $prefix ),
     'post_types' => 'security_compliance',
     'fields'     => array(
                       array(
-                        'name' => __( 'Full name', 'your-prefix' ),
-                        'id'   => $prefix . 'fname',
+                        'name' => __( 'Declaration Name', $prefix ),
+                        'id'   => $prefix . 'name',
                         'type' => 'text',
                       ),
                     ),
+    
   );
   return $meta_boxes;
 }
