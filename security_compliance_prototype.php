@@ -5,7 +5,7 @@
    License: GPL2
    */
 
-add_action('init', 'security_compliance_prototype');
+require_once plugin_dir_path(__FILE__) . 'ext/meta-box/meta-box.php';
 
 function security_compliance_prototype() {
   register_post_type( 'security_compliance',
@@ -14,10 +14,33 @@ function security_compliance_prototype() {
         'name' => __( 'Security Compliance' ),
         'add_new' => __('Add New Declaration'),
         'add_new_item' => __('Add New declaration'),
+        'search_items' => __('Search Declarations'),
+        'view_item' => __('View declaration'),
+        'view_items' => __('View declarations'),
       ),
       'public' => true,
       'has_archive' => true,
-
     )
   );
 }
+
+
+function declarationMeta($meta_boxes){
+  $prefix = 'sc_pro_';
+  $meta_boxes[] = array(
+    'title'      => __( 'Personal Information', 'your-prefix' ),
+    'post_types' => 'security_compliance',
+    'fields'     => array(
+                      array(
+                        'name' => __( 'Full name', 'your-prefix' ),
+                        'id'   => $prefix . 'fname',
+                        'type' => 'text',
+                      ),
+                    ),
+  );
+  return $meta_boxes;
+}
+
+add_action( 'rwmb_meta_boxes', 'declarationMeta' );
+add_action('init', 'security_compliance_prototype');
+
